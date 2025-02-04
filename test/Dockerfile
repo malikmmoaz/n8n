@@ -32,6 +32,11 @@ WORKDIR /app
 
 COPY . /app
 
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN apt-get update && apt-get install -y python3-venv && \
+    python3 -m venv venv && \
+    . venv/bin/activate && \
+    pip install --upgrade pip && \
+    pip install --trusted-host pypi.python.org -r requirements.txt
 
 CMD ["python", "app.py"]
+
