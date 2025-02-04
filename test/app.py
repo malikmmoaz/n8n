@@ -9,8 +9,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+import os
 
 app = Flask(__name__)
+
+# SELENIUM_HOST = os.getenv("SELENIUM_HOST", "http://localhost:4444")
 
 
 @app.route("/get-results", methods=["GET"])
@@ -41,7 +44,8 @@ def fetch_html():
         # Setting the driver path and requesting a page
         # driver = webdriver.Chrome(service=s, options=options)
         driver = webdriver.Remote(
-            command_executor="http://localhost:4444/wd/hub", options=options
+            command_executor="http://tyousafn8n.click:4444/wd/hub",
+            options=options,
         )
         # Changing the property of the navigator value for webdriver to undefined
         driver.execute_script(
