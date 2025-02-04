@@ -25,18 +25,22 @@
 ##    chmod +x /usr/local/bin/chromedriver
 
 #CMD ["python", "app.py"]
-
 FROM selenium/standalone-chrome:latest
+
+USER root  # Switch to root user to install packages
 
 WORKDIR /app
 
 COPY . /app
 
-RUN apt-get update && apt-get install -y python3-venv && \
+RUN apt-get update --allow-releaseinfo-change && apt-get install -y python3-venv && \
     python3 -m venv venv && \
     . venv/bin/activate && \
     pip install --upgrade pip && \
     pip install --trusted-host pypi.python.org -r requirements.txt
 
-CMD ["python", "app.py"]
+USER seluser  # Switch back to non-root user for security
+
+CMD ["venv/bin/python", "app.py"]
+
 
